@@ -1,0 +1,22 @@
+h1 {
+    font-size: 3em;
+    font-family: 'Pacifico', cursive;
+}
+
+body {
+    background-color: rgba(70, 131, 180, 0.411);
+}
+
+div.container{
+    margin:auto;
+    max-width: 80%;
+    background-color: white;
+}
+
+h2, p {
+    padding:0.5em;
+}
+
+p {
+    font-size:1.2em;
+}

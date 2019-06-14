@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ vg.gametitle }}</h2>
+<p>{{ vg.summary }}</p>
+    <p>Date Released: {{ vg.releasedate }}</p>
+    <p>Rated: {{ vg.gamerating }}</p>
+    <p>Genre: {{ vg.genre }}</p>
+    <p>Developer: {{ vg.developer }}</p>
+    <p>Players: {{ vg.players }}</p>
+
+
+<h2>Reviews</h2>
+{% for r in reviews %}
+    <h2>{{ r.reviewtitle }}</h2>
+    <p>Date: {{ r.reviewdate }}</p>
+    <p>Rating {{ r.reviewrating }}/10</p>
+    <p>Review: {{ r.reviewtext }}</p>
+{% endfor %}
+{% endblock %}
