@@ -46,7 +46,6 @@ def test_game_detail_success(self):
 class New_Game_authentication_test(TestCase):
     def setUp(self):
         self.test_user=User.objects.create_user(username='testuser1', password='P@ssw0rd1')
-        self.type=Game.objects.create(gametitle='somegame')
         self.vg = Game.objects.create(gametitle='somegame1', user=self.test_user, releasedate='2019-05-13', gamerating='T', genre='fantasy', developer= 'someonecool', players="single-player", summary="the most fun game")
 
     def test_redirect_if_not_logged_in(self):
