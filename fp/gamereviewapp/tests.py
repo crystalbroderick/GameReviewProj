@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, datetime
 from .models import Game, Review
 from .views import GameForm, ReviewForm
 
@@ -34,6 +34,27 @@ class GameFormTest(TestCase):
         form=GameForm(data={'gametitle': ""})
         self.assertFalse(form.is_valid())
 
+    def setUp(self):
+        self.user=User.objects.create(username='user1', password='P@ssw0rd1')
+    
+    def test_gameForm(self):
+        data={
+            'gametitle' : 'game1',
+            'user' : self.user,
+            'releasedate' : datetime.date(2019,5,28),
+        }
+        form = GameForm(data=data)
+        self.assertTrue(form.is_valid)
+
+    def test_gameFormInvalid(self):
+        data={
+            'gametitle' : 'game1',
+            'user' : self.user2,
+            'releasedate' : datetime.date(2019,5,28),
+        }
+        form = GameForm(data=data)
+        self.assertFalse(form.is_valid())
+
 class ReviewFormTest(TestCase):
     def test_reviewform_is_valid(self):
         form=ReviewForm(data={'reviewtitle': "title1", 'summary' : "game summary"})
@@ -53,8 +74,14 @@ class New_Game_authentication_test(TestCase):
         self.assertRedirects(response, '/accounts/login/?next=/gamereviewapp/newGame/')
 
     def test_Logged_in_uses_correct_template(self):
-        login=self.client.login(username='testuser1', password='P@ssw0rd1')
+        self.login=self.client.login(username='testuser1', password='P@ssw0rd1')
         response=self.client.get(reverse('newgame'))
         self.assertEqual(str(response.context['user']), 'testuser1')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'gamereviewapp/newgame.html')
+
+class IndexTest(TestCase):
+    def test_view_url_accessible_by_name(self):
+        response=self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+ 
